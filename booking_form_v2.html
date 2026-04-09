@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Entry — Coco Cavana Boracay</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a1628;
+  --navy2: #112240;
+  --blue: #1a56db;
+  --blue2: #1e40af;
+  --teal: #0891b2;
+  --green: #059669;
+  --amber: #d97706;
+  --red: #dc2626;
+  --white: #ffffff;
+  --off: #f8fafc;
+  --gray50: #f1f5f9;
+  --gray100: #e2e8f0;
+  --gray200: #cbd5e1;
+  --gray400: #94a3b8;
+  --gray600: #475569;
+  --gray800: #1e293b;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(10,22,40,0.09);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#eef2f7;min-height:100vh;color:var(--gray800);}
+
+/* TOPBAR */
+.topbar{background:var(--navy);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,0.06);}
+.topbar-brand{display:flex;align-items:center;gap:10px;}
+.topbar-logo{width:30px;height:30px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.topbar-logo svg{width:16px;height:16px;}
+.topbar-name{color:#fff;font-size:15px;font-weight:700;letter-spacing:-0.3px;}
+.topbar-sub{color:var(--gray400);font-size:12px;margin-left:4px;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.conn-pill{display:flex;align-items:center;gap:6px;background:rgba(5,150,105,0.2);border:1px solid rgba(5,150,105,0.35);color:#6ee7b7;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;}
+.conn-dot{width:6px;height:6px;border-radius:50%;background:#10b981;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.bk-pill{background:rgba(26,86,219,0.25);border:1px solid rgba(26,86,219,0.4);color:#93c5fd;font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;font-family:'DM Mono',monospace;}
+
+/* MAIN */
+.main{max-width:900px;margin:28px auto;padding:0 20px 60px;}
+
+/* STEPPER */
+.stepper{display:flex;align-items:center;background:var(--white);border-radius:var(--radius);padding:6px;box-shadow:var(--shadow);gap:4px;margin-bottom:22px;}
+.step-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;border:none;background:transparent;color:var(--gray400);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;transition:all .2s;}
+.step-btn .num{width:22px;height:22px;border-radius:50%;background:var(--gray100);color:var(--gray400);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;transition:all .2s;flex-shrink:0;}
+.step-btn.active{background:var(--navy);color:#fff;}
+.step-btn.active .num{background:var(--blue);color:#fff;}
+.step-btn.done{color:var(--green);}
+.step-btn.done .num{background:#d1fae5;color:var(--green);}
+.step-div{width:20px;height:1px;background:var(--gray100);flex-shrink:0;}
+
+/* CARD */
+.card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;}
+.card-header{display:flex;align-items:center;gap:12px;padding:15px 22px;border-bottom:1px solid var(--gray50);}
+.card-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.card-icon svg{width:17px;height:17px;}
+.card-title{font-size:14px;font-weight:700;color:var(--gray800);}
+.card-sub{font-size:11px;color:var(--gray400);margin-top:1px;}
+.card-body{padding:18px 22px;}
+
+/* FIELDS */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:11px;font-weight:700;color:var(--gray600);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:5px;}
+.col-tag{background:var(--navy);color:#93c5fd;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;font-family:'DM Mono',monospace;}
+.field input,.field select{height:42px;border:1.5px solid var(--gray100);border-radius:var(--radius-sm);padding:0 13px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--gray800);background:var(--off);outline:none;transition:all .15s;width:100%;}
+.field input:focus,.field select:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(26,86,219,.08);}
+.field input::placeholder{color:var(--gray200);}
+.field select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-color:var(--off);padding-right:32px;}
+.amount-wrap{position:relative;}
+.amount-wrap .peso{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:600;color:var(--gray400);pointer-events:none;}
+.amount-wrap input{padding-left:26px !important;}
+
+/* ROOMS GRID */
+.rooms-wrap{display:flex;flex-direction:column;gap:10px;}
+.room-section-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--gray400);margin-bottom:4px;}
+.room-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.room-chip{display:flex;align-items:center;gap:0;}
+.room-chip input[type=checkbox]{display:none;}
+.room-chip label{
+  display:flex;align-items:center;justify-content:center;
+  min-width:52px;height:36px;padding:0 12px;
+  border:1.5px solid var(--gray100);border-radius:var(--radius-sm);
+  font-size:13px;font-weight:700;color:var(--gray600);
+  cursor:pointer;transition:all .15s;background:var(--off);
+  white-space:nowrap;
+}
+.room-chip input[type=checkbox]:checked + label{
+  background:var(--navy);color:#fff;border-color:var(--navy);
+}
+.room-chip label:hover{border-color:var(--gray200);background:var(--gray50);}
+.room-chip input[type=checkbox]:checked + label:hover{background:#0d1f3c;}
+.selected-rooms-display{
+  min-height:36px;padding:8px 12px;
+  background:var(--gray50);border:1.5px solid var(--gray100);
+  border-radius:var(--radius-sm);font-size:13px;font-weight:600;
+  color:var(--gray800);display:flex;align-items:center;flex-wrap:wrap;gap:6px;
+}
+.room-tag{background:var(--navy);color:#93c5fd;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;font-family:'DM Mono',monospace;}
+
+/* PAYMENT BLOCKS */
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.pay-block{background:var(--gray50);border:1.5px solid var(--gray100);border-radius:var(--radius-sm);padding:15px;}
+.pay-block-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--gray400);margin-bottom:11px;display:flex;align-items:center;gap:6px;}
+.pay-badge{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.pay-inner{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* TOGGLE BUTTON for additional payment */
+.toggle-add{
+  display:flex;align-items:center;gap:8px;
+  width:100%;padding:10px 14px;
+  background:transparent;border:1.5px dashed var(--gray200);
+  border-radius:var(--radius-sm);cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;
+  color:var(--gray400);transition:all .15s;margin-top:2px;
+}
+.toggle-add:hover{border-color:var(--blue);color:var(--blue);background:#eff6ff;}
+.toggle-add .icon{width:20px;height:20px;border-radius:50%;background:var(--gray100);display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s;}
+.toggle-add:hover .icon{background:#dbeafe;}
+.extra-pay{display:none;margin-top:12px;animation:slideDown .2s ease;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.extra-pay.show{display:block;}
+.remove-extra{
+  display:flex;align-items:center;gap:6px;
+  background:transparent;border:none;color:var(--gray400);
+  font-size:11px;font-weight:700;cursor:pointer;padding:4px 0;margin-top:8px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.remove-extra:hover{color:var(--red);}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:10px;margin-top:8px;}
+.btn-primary{flex:1;height:46px;background:var(--navy);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:-.2px;}
+.btn-primary:hover{background:#0d1f3c;transform:translateY(-1px);box-shadow:0 4px 16px rgba(10,22,40,.2);}
+.btn-primary:active{transform:translateY(0);}
+.btn-primary:disabled{background:var(--gray200);color:var(--gray400);cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-primary.green-btn{background:var(--green);}
+.btn-primary.green-btn:hover{background:#047857;}
+.btn-ghost{height:46px;padding:0 20px;background:var(--white);color:var(--gray600);border:1.5px solid var(--gray100);border-radius:var(--radius-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;}
+.btn-ghost:hover{background:var(--gray50);border-color:var(--gray200);}
+
+/* TOAST */
+.toast{display:none;border-radius:var(--radius-sm);padding:13px 18px;font-size:13px;font-weight:600;margin-top:12px;border:1.5px solid;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.toast.show{display:flex;align-items:center;gap:10px;}
+.toast.ok{background:#ecfdf5;color:#065f46;border-color:#6ee7b7;}
+.toast.err{background:#eff6ff;color:#1e40af;border-color:#93c5fd;}
+.toast.loading{background:#fffbeb;color:#92400e;border-color:#fcd34d;}
+
+/* REVIEW */
+.review-2col{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.review-section-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--gray400);margin-bottom:10px;}
+.review-table{width:100%;border-collapse:collapse;}
+.review-table td{padding:8px 0;font-size:13px;border-bottom:1px solid var(--gray50);vertical-align:top;}
+.review-table td:first-child{color:var(--gray400);font-weight:600;width:130px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding-right:12px;}
+.review-table td:last-child{color:var(--gray800);font-weight:600;}
+.totals-box{margin-top:14px;padding:14px;background:#f0fdf4;border-radius:var(--radius-sm);border:1.5px solid #6ee7b7;}
+.total-row{display:flex;justify-content:space-between;margin-bottom:7px;}
+.total-row:last-child{margin-bottom:0;padding-top:8px;border-top:1px solid #a7f3d0;}
+.total-label{font-size:12px;color:#065f46;font-weight:600;}
+.total-val{font-size:13px;font-weight:700;color:var(--green);}
+.grand-label{font-size:13px;color:#065f46;font-weight:800;}
+.grand-val{font-size:17px;font-weight:800;color:#065f46;}
+
+.copy-row{display:none;background:var(--gray50);border:1.5px solid var(--gray100);border-radius:var(--radius-sm);padding:12px;font-size:11px;font-family:'DM Mono',monospace;color:var(--gray600);word-break:break-all;margin-top:10px;line-height:1.6;}
+.btn-copy{display:none;margin-top:8px;background:transparent;color:var(--blue2);border:1.5px solid #bfdbfe;border-radius:var(--radius-sm);padding:7px 18px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s;}
+.btn-copy:hover{background:#eff6ff;}
+
+/* STATS GRID */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+.stat-box{background:var(--white);border:1.5px solid var(--gray100);border-radius:var(--radius-sm);padding:12px 14px;}
+.stat-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray400);margin-bottom:5px;}
+.stat-val{font-size:14px;font-weight:700;color:var(--gray800);}
+.stat-val.blue{color:var(--blue2);font-family:'DM Mono',monospace;}
+.stat-val.green{color:var(--green);}
+
+@media(max-width:640px){
+  .main{margin:12px auto;}
+  .grid2,.pay-grid,.review-2col,.stats-grid{grid-template-columns:1fr;}
+  .grid3{grid-template-columns:1fr 1fr;}
+  .step-btn .label{display:none;}
+  .topbar{padding:0 14px;}
+  .topbar-sub{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">
+      <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.8"><rect x="1" y="3" width="14" height="10" rx="2"/><path d="M1 6h14M5 9.5h2"/></svg>
+    </div>
+    <span class="topbar-name">Booking Entry</span>
+    <span class="topbar-sub">/ Coco Cavana Boracay</span>
+  </div>
+  <div class="topbar-right">
+    <div class="conn-pill"><div class="conn-dot"></div>Sheets connected</div>
+    <div class="bk-pill" id="bk-num">BK—</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- STEPPER -->
+  <div class="stepper">
+    <button class="step-btn active" onclick="goStep(0)" id="s0"><span class="num">1</span><span class="label">Guest Info</span></button>
+    <div class="step-div"></div>
+    <button class="step-btn" onclick="goStep(1)" id="s1"><span class="num">2</span><span class="label">Payments</span></button>
+    <div class="step-div"></div>
+    <button class="step-btn" onclick="goStep(2)" id="s2"><span class="num">3</span><span class="label">Review & Submit</span></button>
+  </div>
+
+  <!-- PAGE 0: GUEST INFO -->
+  <div id="page0">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#eff6ff;">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#1a56db" stroke-width="1.8"><circle cx="9" cy="6" r="3.5"/><path d="M2 17c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
+        </div>
+        <div><div class="card-title">Guest Details</div><div class="card-sub">Columns A – E</div></div>
+      </div>
+      <div class="card-body">
+        <div class="grid2" style="margin-bottom:14px;">
+          <div class="field">
+            <label><span class="col-tag">A</span> Booking Number</label>
+            <input type="text" id="f_booking" placeholder="e.g. CCB263068" oninput="syncBadge(this.value)">
+          </div>
+          <div class="field">
+            <label><span class="col-tag">B</span> Guest Name</label>
+            <input type="text" id="f_name" placeholder="Full name">
+          </div>
+        </div>
+        <div class="grid3" style="margin-bottom:14px;">
+          <div class="field">
+            <label><span class="col-tag">C</span> Check In</label>
+            <input type="date" id="f_checkin">
+          </div>
+          <div class="field">
+            <label><span class="col-tag">D</span> Check Out</label>
+            <input type="date" id="f_checkout">
+          </div>
+          <div class="field">
+            <label><span class="col-tag">E</span> Contact Number</label>
+            <input type="text" id="f_contact" placeholder="09XX XXX XXXX">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROOM SELECTION -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#f0fdf4;">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#059669" stroke-width="1.8"><rect x="2" y="3" width="14" height="12" rx="2"/><path d="M2 8h14M7 8v7"/></svg>
+        </div>
+        <div><div class="card-title">Room Selection</div><div class="card-sub">Column F — select one or more rooms</div></div>
+      </div>
+      <div class="card-body">
+        <div class="rooms-wrap">
+          <div>
+            <div class="room-section-label">Room Type</div>
+            <div class="room-grid">
+              <div class="room-chip"><input type="checkbox" id="rm_A" value="Room A" onchange="updateRooms()"><label for="rm_A">Room A</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_B" value="Room B" onchange="updateRooms()"><label for="rm_B">Room B</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_C" value="Room C" onchange="updateRooms()"><label for="rm_C">Room C</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_D" value="Room D" onchange="updateRooms()"><label for="rm_D">Room D</label></div>
+            </div>
+          </div>
+          <div>
+            <div class="room-section-label">Room Number</div>
+            <div class="room-grid">
+              <div class="room-chip"><input type="checkbox" id="rm_1" value="Room 1" onchange="updateRooms()"><label for="rm_1">1</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_2" value="Room 2" onchange="updateRooms()"><label for="rm_2">2</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_3" value="Room 3" onchange="updateRooms()"><label for="rm_3">3</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_4" value="Room 4" onchange="updateRooms()"><label for="rm_4">4</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_5" value="Room 5" onchange="updateRooms()"><label for="rm_5">5</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_6" value="Room 6" onchange="updateRooms()"><label for="rm_6">6</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_7" value="Room 7" onchange="updateRooms()"><label for="rm_7">7</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_8" value="Room 8" onchange="updateRooms()"><label for="rm_8">8</label></div>
+              <div class="room-chip"><input type="checkbox" id="rm_9" value="Room 9" onchange="updateRooms()"><label for="rm_9">9</label></div>
+            </div>
+          </div>
+          <div>
+            <div class="room-section-label" style="margin-bottom:6px;">Selected</div>
+            <div class="selected-rooms-display" id="rooms-display">
+              <span style="color:var(--gray200);font-size:13px;">No rooms selected</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-ghost" onclick="clearForm()">Clear</button>
+      <button class="btn-primary" onclick="goStep(1)">
+        Next: Payments
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- PAGE 1: PAYMENTS -->
+  <div id="page1" style="display:none;">
+
+    <!-- DOWNPAYMENT -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ecfdf5;">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#059669" stroke-width="1.8"><rect x="1" y="4" width="16" height="11" rx="2"/><path d="M1 8h16M5 12h3"/></svg>
+        </div>
+        <div><div class="card-title">Downpayment</div><div class="card-sub">Columns G – J · Add second if partial</div></div>
+      </div>
+      <div class="card-body">
+        <div class="pay-block" style="margin-bottom:10px;">
+          <div class="pay-block-title"><span class="pay-badge" style="background:#059669;"></span>Downpayment 1</div>
+          <div class="pay-inner">
+            <div class="field">
+              <label><span class="col-tag">G</span> Amount</label>
+              <div class="amount-wrap"><span class="peso">₱</span><input type="number" id="f_dp1" placeholder="0.00" min="0" step="0.01" oninput="updateTotals()"></div>
+            </div>
+            <div class="field">
+              <label><span class="col-tag">H</span> Bank</label>
+              <select id="f_bank1">
+                <option value="">— Select —</option>
+                <option value="GCASH">GCash</option>
+                <option value="UB">UnionBank (UB)</option>
+                <option value="MB">Metrobank (MB)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ADD DP2 TOGGLE -->
+        <button class="toggle-add" onclick="toggleExtra('dp2')" id="toggle-dp2">
+          <span class="icon">+</span>
+          Add Downpayment 2 (partial payment)
+        </button>
+        <div class="extra-pay" id="extra-dp2">
+          <div class="pay-block">
+            <div class="pay-block-title"><span class="pay-badge" style="background:#0891b2;"></span>Downpayment 2</div>
+            <div class="pay-inner">
+              <div class="field">
+                <label><span class="col-tag">I</span> Amount</label>
+                <div class="amount-wrap"><span class="peso">₱</span><input type="number" id="f_dp2" placeholder="0.00" min="0" step="0.01" oninput="updateTotals()"></div>
+              </div>
+              <div class="field">
+                <label><span class="col-tag">J</span> Bank</label>
+                <select id="f_bank2">
+                  <option value="">— Select —</option>
+                  <option value="GCASH">GCash</option>
+                  <option value="UB">UnionBank (UB)</option>
+                  <option value="MB">Metrobank (MB)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button class="remove-extra" onclick="removeExtra('dp2')">✕ Remove downpayment 2</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FULL PAYMENT -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#eef2ff;">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#4f46e5" stroke-width="1.8"><circle cx="9" cy="9" r="7"/><path d="M9 5.5v4l2.5 2.5"/></svg>
+        </div>
+        <div><div class="card-title">Full Payment</div><div class="card-sub">Columns K – N · Add second if extended stay</div></div>
+      </div>
+      <div class="card-body">
+        <div class="pay-block" style="margin-bottom:10px;">
+          <div class="pay-block-title"><span class="pay-badge" style="background:#4f46e5;"></span>Full Payment 1</div>
+          <div class="pay-inner">
+            <div class="field">
+              <label><span class="col-tag">K</span> Amount</label>
+              <div class="amount-wrap"><span class="peso">₱</span><input type="number" id="f_fp1" placeholder="0.00" min="0" step="0.01" oninput="updateTotals()"></div>
+            </div>
+            <div class="field">
+              <label><span class="col-tag">L</span> Bank</label>
+              <select id="f_bank3">
+                <option value="">— Select —</option>
+                <option value="GCASH">GCash</option>
+                <option value="UB">UnionBank (UB)</option>
+                <option value="MB">Metrobank (MB)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ADD FP2 TOGGLE -->
+        <button class="toggle-add" onclick="toggleExtra('fp2')" id="toggle-fp2">
+          <span class="icon">+</span>
+          Add Full Payment 2 (extension / additional)
+        </button>
+        <div class="extra-pay" id="extra-fp2">
+          <div class="pay-block">
+            <div class="pay-block-title"><span class="pay-badge" style="background:#d97706;"></span>Full Payment 2</div>
+            <div class="pay-inner">
+              <div class="field">
+                <label><span class="col-tag">M</span> Amount</label>
+                <div class="amount-wrap"><span class="peso">₱</span><input type="number" id="f_fp2" placeholder="0.00" min="0" step="0.01" oninput="updateTotals()"></div>
+              </div>
+              <div class="field">
+                <label><span class="col-tag">N</span> Bank</label>
+                <select id="f_bank4">
+                  <option value="">— Select —</option>
+                  <option value="GCASH">GCash</option>
+                  <option value="UB">UnionBank (UB)</option>
+                  <option value="MB">Metrobank (MB)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button class="remove-extra" onclick="removeExtra('fp2')">✕ Remove full payment 2</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-ghost" onclick="goStep(0)">← Back</button>
+      <button class="btn-primary" onclick="goStep(2)">
+        Next: Review
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- PAGE 2: REVIEW -->
+  <div id="page2" style="display:none;">
+
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-label">Booking</div><div class="stat-val blue" id="s_booking">—</div></div>
+      <div class="stat-box"><div class="stat-label">Guest</div><div class="stat-val" id="s_name" style="font-size:13px;">—</div></div>
+      <div class="stat-box"><div class="stat-label">Check In</div><div class="stat-val" id="s_checkin" style="font-size:13px;">—</div></div>
+      <div class="stat-box"><div class="stat-label">Room(s)</div><div class="stat-val" id="s_room" style="font-size:12px;">—</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#f0fdf4;">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#059669" stroke-width="1.8"><path d="M3 9l4 4 8-8"/></svg>
+        </div>
+        <div><div class="card-title">Booking Summary</div><div class="card-sub">Review before submitting to Google Sheets</div></div>
+      </div>
+      <div class="card-body">
+        <div class="review-2col">
+          <div>
+            <div class="review-section-title">Guest Details</div>
+            <table class="review-table">
+              <tr><td>Booking No.</td><td id="r_booking">—</td></tr>
+              <tr><td>Name</td><td id="r_name">—</td></tr>
+              <tr><td>Check In</td><td id="r_checkin">—</td></tr>
+              <tr><td>Check Out</td><td id="r_checkout">—</td></tr>
+              <tr><td>Contact</td><td id="r_contact">—</td></tr>
+              <tr><td>Room(s)</td><td id="r_room">—</td></tr>
+            </table>
+          </div>
+          <div>
+            <div class="review-section-title">Payments</div>
+            <table class="review-table">
+              <tr><td>DP 1</td><td id="r_dp1">—</td></tr>
+              <tr><td>Bank</td><td id="r_bank1">—</td></tr>
+              <tr><td>DP 2</td><td id="r_dp2">—</td></tr>
+              <tr><td>Bank</td><td id="r_bank2">—</td></tr>
+              <tr><td>Full Pay 1</td><td id="r_fp1">—</td></tr>
+              <tr><td>Bank</td><td id="r_bank3">—</td></tr>
+              <tr><td>Full Pay 2</td><td id="r_fp2">—</td></tr>
+              <tr><td>Bank</td><td id="r_bank4">—</td></tr>
+            </table>
+            <div class="totals-box">
+              <div class="total-row"><span class="total-label">Total Downpayment</span><span class="total-val" id="r_dp_total">₱0.00</span></div>
+              <div class="total-row"><span class="total-label">Total Full Payment</span><span class="total-val" id="r_fp_total">₱0.00</span></div>
+              <div class="total-row"><span class="grand-label">Grand Total</span><span class="grand-val" id="r_grand">₱0.00</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-ghost" onclick="goStep(1)">← Back</button>
+      <button class="btn-primary" id="submit-btn" onclick="submitEntry()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 8h9M8 5l3 3-3 3"/><path d="M13 3v10"/></svg>
+        Submit to Google Sheets
+      </button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <div class="copy-row" id="copy-area"></div>
+    <button class="btn-copy" id="btn-copy" onclick="copyAgain()">Copy row again</button>
+    <button class="btn-primary green-btn" id="new-btn" style="display:none;margin-top:10px;" onclick="clearForm()">+ New Booking Entry</button>
+  </div>
+
+</div>
+
+<script>
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvMvjLCx6rIDGvvzAJvkQbOob2d4FUmo_NzFRxKmLxSXfpfsM6PrmCcnKEtu9mLZL48A/exec";
+var selectedRooms = [];
+
+function goStep(n) {
+  if (n === 2) buildReview();
+  [0,1,2].forEach(function(i){
+    document.getElementById("page"+i).style.display = i===n ? "" : "none";
+    var s = document.getElementById("s"+i);
+    s.className = "step-btn";
+    if (i===n) s.classList.add("active");
+    else if (i<n) s.classList.add("done");
+  });
+}
+
+function syncBadge(v) { document.getElementById("bk-num").textContent = v || "BK—"; }
+
+function updateRooms() {
+  selectedRooms = [];
+  document.querySelectorAll('.room-chip input[type=checkbox]:checked').forEach(function(cb){
+    selectedRooms.push(cb.value);
+  });
+  var display = document.getElementById("rooms-display");
+  if (selectedRooms.length === 0) {
+    display.innerHTML = '<span style="color:var(--gray200);font-size:13px;">No rooms selected</span>';
+  } else {
+    display.innerHTML = selectedRooms.map(function(r){
+      return '<span class="room-tag">'+r+'</span>';
+    }).join('');
+  }
+}
+
+function toggleExtra(which) {
+  var el = document.getElementById("extra-"+which);
+  var btn = document.getElementById("toggle-"+which);
+  el.classList.add("show");
+  btn.style.display = "none";
+}
+
+function removeExtra(which) {
+  var el = document.getElementById("extra-"+which);
+  var btn = document.getElementById("toggle-"+which);
+  el.classList.remove("show");
+  btn.style.display = "flex";
+  if (which === "dp2") { document.getElementById("f_dp2").value=""; document.getElementById("f_bank2").value=""; }
+  if (which === "fp2") { document.getElementById("f_fp2").value=""; document.getElementById("f_bank4").value=""; }
+  updateTotals();
+}
+
+function getVal(id) { return (document.getElementById(id)||{}).value||""; }
+function getNum(id) { return parseFloat(getVal(id))||0; }
+function fmt(n) { return "₱"+n.toLocaleString("en-PH",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtVal(id) { var n=getNum(id); return n>0?fmt(n):"—"; }
+
+function updateTotals() {
+  var dp = getNum("f_dp1")+getNum("f_dp2");
+  var fp = getNum("f_fp1")+getNum("f_fp2");
+  document.getElementById("r_dp_total").textContent = fmt(dp);
+  document.getElementById("r_fp_total").textContent = fmt(fp);
+  document.getElementById("r_grand").textContent = fmt(dp+fp);
+}
+
+function buildReview() {
+  var roomStr = selectedRooms.length ? selectedRooms.join(", ") : "—";
+  var dpExtra = document.getElementById("extra-dp2").classList.contains("show");
+  var fpExtra = document.getElementById("extra-fp2").classList.contains("show");
+
+  document.getElementById("r_booking").textContent = getVal("f_booking")||"—";
+  document.getElementById("r_name").textContent = getVal("f_name")||"—";
+  document.getElementById("r_checkin").textContent = getVal("f_checkin")||"—";
+  document.getElementById("r_checkout").textContent = getVal("f_checkout")||"—";
+  document.getElementById("r_contact").textContent = getVal("f_contact")||"—";
+  document.getElementById("r_room").textContent = roomStr;
+
+  document.getElementById("r_dp1").textContent = fmtVal("f_dp1");
+  document.getElementById("r_bank1").textContent = getVal("f_bank1")||"—";
+  document.getElementById("r_dp2").textContent = dpExtra ? fmtVal("f_dp2") : "N/A";
+  document.getElementById("r_bank2").textContent = dpExtra ? (getVal("f_bank2")||"—") : "N/A";
+  document.getElementById("r_fp1").textContent = fmtVal("f_fp1");
+  document.getElementById("r_bank3").textContent = getVal("f_bank3")||"—";
+  document.getElementById("r_fp2").textContent = fpExtra ? fmtVal("f_fp2") : "N/A";
+  document.getElementById("r_bank4").textContent = fpExtra ? (getVal("f_bank4")||"—") : "N/A";
+
+  document.getElementById("s_booking").textContent = getVal("f_booking")||"—";
+  document.getElementById("s_name").textContent = getVal("f_name")||"—";
+  document.getElementById("s_checkin").textContent = getVal("f_checkin")||"—";
+  document.getElementById("s_room").textContent = roomStr;
+  updateTotals();
+}
+
+function getRow() {
+  var dpExtra = document.getElementById("extra-dp2").classList.contains("show");
+  var fpExtra = document.getElementById("extra-fp2").classList.contains("show");
+  return [
+    getVal("f_booking"),
+    getVal("f_name"),
+    getVal("f_checkin"),
+    getVal("f_checkout"),
+    getVal("f_contact"),
+    selectedRooms.join(", "),
+    getVal("f_dp1"),
+    getVal("f_bank1"),
+    dpExtra ? getVal("f_dp2") : "-",
+    dpExtra ? getVal("f_bank2") : "N/A",
+    getVal("f_fp1"),
+    getVal("f_bank3"),
+    fpExtra ? getVal("f_fp2") : "-",
+    fpExtra ? getVal("f_bank4") : "N/A"
+  ];
+}
+
+function showToast(msg, type) {
+  var t = document.getElementById("toast");
+  var icon = type==="ok"?"✓":type==="loading"?"⏳":"→";
+  t.innerHTML = "<span>"+icon+"</span> "+msg;
+  t.className = "toast show "+type;
+}
+
+function submitEntry() {
+  var btn = document.getElementById("submit-btn");
+  btn.disabled = true;
+  btn.innerHTML = "Submitting...";
+  showToast("Sending to Google Sheets...", "loading");
+  var row = getRow();
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify({row: row}),
+    headers: {"Content-Type":"application/json"}
+  }).then(function(){
+    showToast("Submitted! Row added to Google Sheets.", "ok");
+    btn.innerHTML = "✓ Submitted!";
+    document.getElementById("new-btn").style.display = "flex";
+  }).catch(function(){
+    fallbackCopy(row.join("\t"));
+    btn.disabled = false;
+    btn.innerHTML = "Submit to Google Sheets";
+  });
+}
+
+function fallbackCopy(tsv) {
+  navigator.clipboard.writeText(tsv).catch(function(){});
+  document.getElementById("copy-area").textContent = tsv;
+  document.getElementById("copy-area").style.display = "block";
+  document.getElementById("btn-copy").style.display = "inline-block";
+  document.getElementById("new-btn").style.display = "flex";
+  showToast("Copied! Paste into Google Sheets with Ctrl+V.", "ok");
+}
+
+function copyAgain() {
+  navigator.clipboard.writeText(document.getElementById("copy-area").textContent).catch(function(){});
+}
+
+function clearForm() {
+  ["f_booking","f_name","f_checkin","f_checkout","f_contact",
+   "f_dp1","f_bank1","f_dp2","f_bank2","f_fp1","f_bank3","f_fp2","f_bank4"]
+  .forEach(function(id){ var el=document.getElementById(id); if(el) el.value=""; });
+  document.querySelectorAll('.room-chip input[type=checkbox]').forEach(function(cb){ cb.checked=false; });
+  selectedRooms = [];
+  updateRooms();
+  removeExtra("dp2"); removeExtra("fp2");
+  document.getElementById("bk-num").textContent = "BK—";
+  document.getElementById("toast").className = "toast";
+  document.getElementById("copy-area").style.display = "none";
+  document.getElementById("btn-copy").style.display = "none";
+  document.getElementById("new-btn").style.display = "none";
+  var btn = document.getElementById("submit-btn");
+  btn.disabled = false;
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 8h9M8 5l3 3-3 3"/><path d="M13 3v10"/></svg> Submit to Google Sheets';
+  goStep(0);
+}
+</script>
+</body>
+</html>
